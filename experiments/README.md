@@ -35,3 +35,8 @@ experiments/vfnet/vfnet_r50_fpn_1x_coco.py 你要跑的模型的配置文件
 在mmdetection目录下执行这个命令
 
 现在一定会报错，别急
+
+
+# 多端项目同步，使用github
+git add . & git commit -m "." & git push
+git pull
