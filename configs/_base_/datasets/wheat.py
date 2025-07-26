@@ -90,7 +90,7 @@ test_dataloader = val_dataloader
 # 修改评价指标相关配置
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_root + 'annotations/instances_train2017.json',
+    ann_file=data_root + 'annotations/instances_val2017.json',
     metric='bbox')
 # test_evaluator = dict(
 #     type='CocoMetric',
