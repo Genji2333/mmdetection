@@ -1,6 +1,6 @@
 # 修改数据集相关配置
 data_type = 'CocoDataset'
-data_root = '/icislab/volume1/liuxiaolong/wheat/'
+data_root = '/icislab/volume1/liuxiaolong/data/wheat/'
 metainfo = {
     'classes': ('wheat',),
 }
