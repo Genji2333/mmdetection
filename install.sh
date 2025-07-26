@@ -8,10 +8,10 @@ fi
 
 dir=$(basename "$PWD")
 
-if [ "$dir" == "mmdetction" ]; then
-    echo "Running in the pysot directory"
+if [ "$dir" == "mmdetection" ]; then
+    echo "Running in the right directory"
 else
-    echo "Not in the pysot directory"
+    echo "Not in the right directory"
     exit 1
 fi
 
@@ -31,7 +31,7 @@ conda install -y pytorch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 pytorch-cu
 
 # install mim mmcv
 echo "install mim mmcv"
-pip install -y openmim
+pip install openmim
 mim install mmengine
 mim install "mmcv==2.1.0"
 
