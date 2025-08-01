@@ -1,8 +1,7 @@
 _base_ = [
     'mmdet::_base_/datasets/wheat.py',
     'mmdet::_base_/schedules/schedule_1x.py', 
-    'mmdet::_base_/default_runtime.py',
-    'mmdet::_base_/fast_rcnn/fast-rcnn_r50_fpn_1x_coco.py'
+    'mmdet::_base_/default_runtime.py'
 ]
 
 # model settings

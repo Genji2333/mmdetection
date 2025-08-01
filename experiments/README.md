@@ -27,8 +27,10 @@ CUDA_VISIBLE_DEVICES=1,2 PORT=7878 ./tools/dist_train.sh experiments/vfnet/vfnet
 CUDA_VISIBLE_DEVICES=1,2 PORT=7878 ./tools/dist_train.sh experiments/fast_rcnn/fast-rcnn_r50_fpn_1x_coco.py 2 --work-dir ./log/fast-rcnn
 ```
 ```bash
-CUDA_VISIBLE_DEVICES=0,1 PORT=7878 ./tools/dist_train.sh experiments/fast_rcnn/fast-rcnn_r50_fpn_1x_coco.py 2 --work-dir ./log/fast-rcnn
+CUDA_VISIBLE_DEVICES=1,2 PORT=7878 ./tools/dist_train.sh experiments/libra_rcnn/libra-fast-rcnn_r50_fpn_1x_coco.py 2 --work-dir ./log/libra_rcnn
 ```
+
+
 
 这是针对同时使用多>1GPU的用法说明：
 CUDA_VISIBLE_DEVICES=0,1 设定需可用哪几块GPU，从0开始编号
