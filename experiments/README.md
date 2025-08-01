@@ -23,6 +23,9 @@ CTRL+a  p 上一个窗口
 ```bash
 CUDA_VISIBLE_DEVICES=0,1 PORT=7878 ./tools/dist_train.sh experiments/vfnet/vfnet_r50_fpn_1x_coco.py 2 --work-dir ./log/vfnet
 ```
+```bash
+CUDA_VISIBLE_DEVICES=0,1 PORT=7878 ./tools/dist_train.sh experiments/fast_rcnn/fast-rcnn_r50_fpn_1x_coco.py 2 --work-dir ./log/fast-rcnn
+```
 这是针对同时使用多>1GPU的用法说明：
 CUDA_VISIBLE_DEVICES=0,1 设定需可用哪几块GPU，从0开始编号
 PORT=7878 多GPU需要相互通信，使用这个端口。如果你同时跑两个实验，每个实验用了多个GPU，端口不能一样
