@@ -3,7 +3,6 @@ _base_ = [
     'mmdet::_base_/schedules/schedule_1x.py', 
     'mmdet::_base_/default_runtime.py'
 ]
-# 'mmdet::_base_/models/fast-rcnn_r50_fpn.py',
 
 # model settings
 model = dict(
