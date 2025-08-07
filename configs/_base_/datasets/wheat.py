@@ -9,14 +9,14 @@ backend_args = None
 
 train_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
-    dict(type='LoadAnnotations', with_bbox=True),
+    dict(type='LoadAnnotations', with_bbox=True,with_mask=True),
     dict(type='Resize', scale=(640, 640), keep_ratio=True),
     dict(type='RandomFlip', prob=0.5),
     dict(type='PackDetInputs')
 ]
 test_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
-    dict(type='Resize', scale=(640, 640), keep_ratio=True),
+    dict(type='Resize', scale=(640, 640), keep_ratio=True,with_mask=True), # with_mask=True maskrcnn专用
     # If you don't have a gt annotation, delete the pipeline
     dict(type='LoadAnnotations', with_bbox=True),
     dict(
