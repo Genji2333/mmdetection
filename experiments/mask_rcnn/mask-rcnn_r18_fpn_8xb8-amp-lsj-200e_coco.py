@@ -2,15 +2,21 @@ _base_ = [
     'mmdet::_base_/datasets/wheat.py',
     'mmdet::_base_/schedules/schedule_1x.py', 
     'mmdet::_base_/default_runtime.py',
+    'mmdet::mask_rcnn/mask-rcnn_r50_fpn_1x_coco.py'
 ]
 
-
 model = dict(
-    type='MaskRCNN',
     backbone=dict(
         depth=18,
         init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet18')),
     neck=dict(in_channels=[64, 128, 256, 512]))
+
+# model = dict(
+#     type='MaskRCNN',
+#     backbone=dict(
+#         depth=18,
+#         init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet18')),
+#     neck=dict(in_channels=[64, 128, 256, 512]))
 
 
 
