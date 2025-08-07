@@ -30,6 +30,10 @@ CUDA_VISIBLE_DEVICES=1,2 PORT=7878 ./tools/dist_train.sh experiments/fast_rcnn/f
 CUDA_VISIBLE_DEVICES=1,2 PORT=7878 ./tools/dist_train.sh experiments/libra_rcnn/libra-fast-rcnn_r50_fpn_1x_coco.py 2 --work-dir ./log/libra_rcnn
 ```
 
+```bash
+CUDA_VISIBLE_DEVICES=0,1 PORT=7878 ./tools/dist_train.sh experiments/mask_rcnn/mask-rcnn_r18_fpn_8xb8-amp-lsj-200e_coco.py 2 --work-dir ./log/mask_rcnn
+```
+
 
 
 这是针对同时使用多>1GPU的用法说明：
