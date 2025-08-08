@@ -38,6 +38,11 @@ CUDA_VISIBLE_DEVICES=0,1 PORT=7878 ./tools/dist_train.sh experiments/mask_rcnn/m
 CUDA_VISIBLE_DEVICES=0,1 PORT=7878 ./tools/dist_train.sh experiments/dynamic-rcnn/dynamic-rcnn_r50_fpn_1x_coco.py 2 --work-dir ./log/dynamic-rcnn
 ```
 
+```bash
+CUDA_VISIBLE_DEVICES=0,1 PORT=7878 ./tools/dist_train.sh experiments/yolox/yolox_s_8xb8-300e_coco.py 2 --work-dir ./log/yolox
+```
+/icislab/volume1/liuxiaolong/mmdetection/experiments/yolox/yolox_s_8xb8-300e_coco.py
+
 
 这是针对同时使用多>1GPU的用法说明：
 CUDA_VISIBLE_DEVICES=0,1 设定需可用哪几块GPU，从0开始编号
