@@ -1,5 +1,4 @@
 _base_ = [
-    '../faster_rcnn/faster-rcnn_r50_fpn_1x_coco.py',
     'mmdet::_base_/datasets/wheat.py',
     'mmdet::_base_/schedules/schedule_1x.py', 
     'mmdet::_base_/default_runtime.py'
