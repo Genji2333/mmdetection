@@ -1,7 +1,8 @@
 _base_ = [
     'mmdet::_base_/datasets/wheat.py',
     'mmdet::_base_/schedules/schedule_1x.py', 
-    'mmdet::_base_/default_runtime.py'
+    'mmdet::_base_/default_runtime.py',
+    'mmdet::_base_/cascade_rcnn/cascade-mask-rcnn_r50_fpn_1x_coco.py'
 ]
 
 norm_cfg = dict(type='SyncBN', requires_grad=True)
