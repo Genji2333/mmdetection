@@ -10,7 +10,6 @@ model = dict(
     type='ResNeSt',
     backbone=dict(
         type='ResNeSt',
-        stem_channels=64,
         depth=50,
         radix=2,
         reduction_factor=4,
@@ -46,8 +45,7 @@ model = dict(
                     type='CrossEntropyLoss',
                     use_sigmoid=False,
                     loss_weight=1.0),
-                loss_bbox=dict(type='SmoothL1Loss', beta=1.0,
-                               loss_weight=1.0)),
+                loss_bbox=dict(type='SmoothL1Loss', beta=1.0, loss_weight=1.0)),
             dict(
                 type='Shared4Conv1FCBBoxHead',
                 in_channels=256,
@@ -65,8 +63,7 @@ model = dict(
                     type='CrossEntropyLoss',
                     use_sigmoid=False,
                     loss_weight=1.0),
-                loss_bbox=dict(type='SmoothL1Loss', beta=1.0,
-                               loss_weight=1.0)),
+                loss_bbox=dict(type='SmoothL1Loss', beta=1.0, loss_weight=1.0)),
             dict(
                 type='Shared4Conv1FCBBoxHead',
                 in_channels=256,
@@ -91,14 +88,15 @@ model = dict(
 
 # 训练相关配置
 optim_wrapper = dict(
-    optimizer=dict(lr=0.01),
-    paramwise_cfg=dict(bias_lr_mult=2., bias_decay_mult=0.),
-    clip_grad=None)
+    optimizer=dict(lr=0.01, momentum=0.9, type='SGD', weight_decay=0.0001),
+    paramwise_cfg=dict(bias_decay_mult=0.0, bias_lr_mult=2.0),
+    clip_grad=None,
+    type='OptimWrapper')
 
 # 学习率调度器
 max_epochs = 12
 param_scheduler = [
-    dict(type='LinearLR', start_factor=0.1, by_epoch=False, begin=0, end=500),
+    dict(type='LinearLR', begin=0, end=500, start_factor=0.1, by_epoch=False),
     dict(
         type='MultiStepLR',
         begin=0,
@@ -109,4 +107,4 @@ param_scheduler = [
 ]
 
 # 训练配置
-train_cfg = dict(max_epochs=max_epochs)  # 重写训练轮数
+train_cfg = dict(max_epochs=max_epochs, val_interval=1)
