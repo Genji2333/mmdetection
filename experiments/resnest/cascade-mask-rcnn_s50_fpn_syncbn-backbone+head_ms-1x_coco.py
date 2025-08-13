@@ -8,11 +8,6 @@ norm_cfg = dict(type='SyncBN', requires_grad=True)
 
 model = dict(
     type='ResNeSt',
-    data_preprocessor=dict(
-        type='DetDataPreprocessor',  # 确保使用正确的数据预处理类
-        mean=[123.68, 116.779, 103.939],
-        std=[58.393, 57.12, 57.375],
-        bgr_to_rgb=True),
     backbone=dict(
         type='ResNeSt',
         stem_channels=64,
@@ -27,6 +22,11 @@ model = dict(
         norm_eval=False,
         style='pytorch',
         init_cfg=dict(type='Pretrained', checkpoint='open-mmlab://resnest50')),
+    data_preprocessor=dict(
+        type='DetDataPreprocessor',
+        mean=[123.68, 116.779, 103.939],
+        std=[58.393, 57.12, 57.375],
+        bgr_to_rgb=True),
     roi_head=dict(
         bbox_head=[
             dict(
