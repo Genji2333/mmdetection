@@ -3,11 +3,13 @@ _base_ = [
     'mmdet::_base_/schedules/schedule_1x.py', 
     'mmdet::_base_/default_runtime.py'
 ]
+
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 
 model = dict(
     type='ResNeSt',
     data_preprocessor=dict(
+        type='DetDataPreprocessor',  # 确保使用正确的数据预处理类
         mean=[123.68, 116.779, 103.939],
         std=[58.393, 57.12, 57.375],
         bgr_to_rgb=True),
@@ -84,33 +86,16 @@ model = dict(
                     loss_weight=1.0),
                 loss_bbox=dict(type='SmoothL1Loss', beta=1.0, loss_weight=1.0))
         ],
-        mask_head=dict(norm_cfg=norm_cfg)))
+        mask_head=dict(norm_cfg=norm_cfg))
+)
 
-# train_pipeline = [
-#     dict(type='LoadImageFromFile', backend_args={{_base_.backend_args}}),
-#     dict(
-#         type='LoadAnnotations',
-#         with_bbox=True,
-#         with_mask=True,
-#         poly2mask=False),
-#     dict(
-#         type='RandomChoiceResize',
-#         scales=[(1333, 640), (1333, 672), (1333, 704), (1333, 736),
-#                 (1333, 768), (1333, 800)],
-#         keep_ratio=True),
-#     dict(type='RandomFlip', prob=0.5),
-#     dict(type='PackDetInputs')
-# ]
-
-# train_dataloader = dict(dataset=dict(pipeline=train_pipeline))
-
-
+# 训练相关配置
 optim_wrapper = dict(
     optimizer=dict(lr=0.01),
     paramwise_cfg=dict(bias_lr_mult=2., bias_decay_mult=0.),
     clip_grad=None)
 
-# learning rate # 学习率设置
+# 学习率调度器
 max_epochs = 12
 param_scheduler = [
     dict(type='LinearLR', start_factor=0.1, by_epoch=False, begin=0, end=500),
@@ -123,6 +108,5 @@ param_scheduler = [
         gamma=0.1)
 ]
 
-# 比如模型跑多少轮，几轮进行一下验证，也在schedule里
-
-train_cfg = dict(max_epochs=max_epochs) # 这里重写训练轮数
+# 训练配置
+train_cfg = dict(max_epochs=max_epochs)  # 重写训练轮数

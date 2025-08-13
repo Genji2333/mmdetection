@@ -41,6 +41,11 @@ CUDA_VISIBLE_DEVICES=0,1 PORT=7878 ./tools/dist_train.sh experiments/dynamic-rcn
 ```bash
 CUDA_VISIBLE_DEVICES=0,1 PORT=7878 torchrun --nproc-per-node=2 --master_addr="localhost" --master_port=7878 ./tools/train.py experiments/yolox/yolox_s_8xb8-300e_coco.py --work-dir ./log/yolox
 ```
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1 PORT=7878 torchrun --nproc-per-node=2 --master_addr="localhost" --master_port=7878 ./tools/train.py experiments/resnest/cascade-mask-rcnn_s50_fpn_syncbn-backbone+head_ms-1x_coco.py --work-dir ./log/resnest
+```
+
 /icislab/volume1/liuxiaolong/mmdetection/experiments/yolox/yolox_s_8xb8-300e_coco.py
 
 
