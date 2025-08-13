@@ -39,7 +39,7 @@ CUDA_VISIBLE_DEVICES=0,1 PORT=7878 ./tools/dist_train.sh experiments/dynamic-rcn
 ```
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1 PORT=7878 ./tools/dist_train.sh experiments/yolox/yolox_s_8xb8-300e_coco.py 2 --work-dir ./log/yolox
+CUDA_VISIBLE_DEVICES=0,1 PORT=7878 torchrun --nproc-per-node=2 --master_addr="localhost" --master_port=7878 ./tools/train.py experiments/yolox/yolox_s_8xb8-300e_coco.py --work-dir ./log/yolox
 ```
 /icislab/volume1/liuxiaolong/mmdetection/experiments/yolox/yolox_s_8xb8-300e_coco.py
 
