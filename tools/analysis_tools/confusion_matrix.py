@@ -267,6 +267,119 @@ def main():
         save_dir=args.save_dir,
         show=args.show,
         color_theme=args.color_theme)
+# ============ 在这里添加计算precision和recall的代码 ============
+    
+    #计算每个类别的精确率和召回率
+    # num_classes = len(dataset.metainfo['classes'])
+    # diagonal_elements = np.diag(confusion_matrix)
+    # precision_per_class = []
+    # recall_per_class = []
+
+    # for i in range(num_classes):  # 只遍历真实类别，排除background
+    #     tp = diagonal_elements[i]
+    #     precision = tp / np.sum(confusion_matrix[:, i]) if np.sum(confusion_matrix[:, i]) > 0 else 0
+    #     recall = tp / np.sum(confusion_matrix[i, :]) if np.sum(confusion_matrix[i, :]) > 0 else 0
+    #     precision_per_class.append(precision)
+    #     recall_per_class.append(recall)
+
+    # precision_per_class = np.array(precision_per_class)
+    # recall_per_class = np.array(recall_per_class)
+
+    # # 计算总体的平均精确率和召回率（排除background）
+    # mean_precision = np.mean(precision_per_class)
+    # mean_recall = np.mean(recall_per_class)
+
+    # print("\n=== Precision and Recall Results ===")
+    # print("每类的精确率:", precision_per_class)
+    # print("每类的召回率:", recall_per_class)
+    # print("总体平均精确率:", mean_precision)
+    # print("总体平均召回率:", mean_recall)
+    
+    # # 可选：保存结果到文件
+    # result_file = os.path.join(args.save_dir, 'precision_recall_results.txt')
+    # with open(result_file, 'w') as f:
+    #     f.write("=== Precision and Recall Results ===\n")
+    #     f.write(f"每类的精确率: {precision_per_class}\n")
+    #     f.write(f"每类的召回率: {recall_per_class}\n")
+    #     f.write(f"总体平均精确率: {mean_precision}\n")
+    #     f.write(f"总体平均召回率: {mean_recall}\n")
+    
+    # print(f"结果已保存到: {result_file}")
+    # 计算每个类别的精确率和召回率
+    num_classes = len(dataset.metainfo['classes'])
+    diagonal_elements = np.diag(confusion_matrix)
+    precision_per_class = []
+    recall_per_class = []
+    f1_per_class = []
+
+    for i in range(num_classes):  # 只遍历真实类别，排除background
+        tp = diagonal_elements[i]
+        precision = tp / np.sum(confusion_matrix[:, i]) if np.sum(confusion_matrix[:, i]) > 0 else 0
+        recall = tp / np.sum(confusion_matrix[i, :]) if np.sum(confusion_matrix[i, :]) > 0 else 0
+        
+        # 计算F1分数
+        f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
+        
+        precision_per_class.append(precision)
+        recall_per_class.append(recall)
+        f1_per_class.append(f1)
+
+    precision_per_class = np.array(precision_per_class)
+    recall_per_class = np.array(recall_per_class)
+    f1_per_class = np.array(f1_per_class)
+
+    # 计算总体的平均精确率、召回率和F1分数（排除background）
+    mean_precision = np.mean(precision_per_class)
+    mean_recall = np.mean(recall_per_class)
+    mean_f1 = np.mean(f1_per_class)
+
+    print("\n=== Precision, Recall and F1 Results ===")
+    print("每类的精确率:", precision_per_class)
+    print("每类的召回率:", recall_per_class)
+    print("每类的F1分数:", f1_per_class)
+    print("总体平均精确率:", mean_precision)
+    print("总体平均召回率:", mean_recall)
+    print("总体平均F1分数:", mean_f1)
+
+    # 可选：保存结果到文件
+    result_file = os.path.join(args.save_dir, 'precision_recall_f1_results.txt')
+    with open(result_file, 'w') as f:
+        f.write("=== Precision, Recall and F1 Results ===\n")
+        f.write(f"每类的精确率: {precision_per_class}\n")
+        f.write(f"每类的召回率: {recall_per_class}\n")
+        f.write(f"每类的F1分数: {f1_per_class}\n")
+        f.write(f"总体平均精确率: {mean_precision}\n")
+        f.write(f"总体平均召回率: {mean_recall}\n")
+        f.write(f"总体平均F1分数: {mean_f1}\n")
+
+    print(f"结果已保存到: {result_file}")
+
+
+
+
+    # 计算每个类别的精确率和召回率
+    # diagonal_elements = np.diag(confusion_matrix)
+    # precision_per_class = []
+    # recall_per_class = []
+
+    # for i in range(len(confusion_matrix)-1):
+    #     tp = diagonal_elements[i]
+    #     precision = tp / np.sum(confusion_matrix[:, i]) if np.sum(confusion_matrix[:, i]) > 0 else 0
+    #     recall = tp / np.sum(confusion_matrix[i, :]) if np.sum(confusion_matrix[i, :]) > 0 else 0
+    #     precision_per_class.append(precision)
+    #     recall_per_class.append(recall)
+
+    # precision_per_class = np.array(precision_per_class)
+    # recall_per_class = np.array(recall_per_class)
+
+    # # 计算总体的平均精确率和召回率
+    # mean_precision = np.mean(precision_per_class)
+    # mean_recall = np.mean(recall_per_class)
+
+    # print("每类的精确率:", precision_per_class)
+    # print("每类的召回率:", recall_per_class)
+    # print("总体平均精确率:", mean_precision)
+    # print("总体平均召回率:", mean_recall)
 
 
 if __name__ == '__main__':

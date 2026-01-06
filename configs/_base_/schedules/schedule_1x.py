@@ -1,5 +1,5 @@
 # training schedule for 1x
-train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=12, val_interval=1) # 基于epoch训练而非iteration。一共训练12轮，每轮对验证集验证一次。
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=36, val_interval=1) # 基于epoch训练而非iteration。一共训练12轮，每轮对验证集验证一次。
 val_cfg = dict(type='ValLoop') # 这个我也不知道，从来没重写过。
 test_cfg = dict(type='TestLoop')
 
@@ -10,9 +10,9 @@ param_scheduler = [
     dict(
         type='MultiStepLR',
         begin=0,
-        end=12,
+        end=36,
         by_epoch=True,
-        milestones=[8, 11],
+        milestones=[24],
         gamma=0.1)
 ]
 

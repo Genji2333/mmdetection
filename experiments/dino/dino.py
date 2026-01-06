@@ -26,7 +26,7 @@ model = dict(
         norm_cfg=dict(type='BN', requires_grad=False),
         norm_eval=True,
         style='pytorch',
-        init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet50')),
+        init_cfg=dict(type='Pretrained', checkpoint='/icislab/volume1/liuxiaolong/mmdetection/weights/resnet50-19c8e357.pth')),
     neck=dict(
         type='ChannelMapper',
         in_channels=[512, 1024, 2048],
@@ -145,7 +145,7 @@ optim_wrapper = dict(
 )  # custom_keys contains sampling_offsets and reference_points in DeformDETR  # noqa
 
 # learning policy
-max_epochs = 12
+max_epochs = 36
 train_cfg = dict(
     type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=1)
 
@@ -158,7 +158,7 @@ param_scheduler = [
         begin=0,
         end=max_epochs,
         by_epoch=True,
-        milestones=[11],
+        milestones=[24],
         gamma=0.1)
 ]
 

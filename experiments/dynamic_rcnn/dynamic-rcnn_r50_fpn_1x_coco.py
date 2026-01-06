@@ -39,7 +39,7 @@ optim_wrapper = dict(
     clip_grad=None)
 
 # learning rate # 学习率设置
-max_epochs = 12
+max_epochs = 36
 param_scheduler = [
     dict(type='LinearLR', start_factor=0.1, by_epoch=False, begin=0, end=500),
     dict(
@@ -47,7 +47,7 @@ param_scheduler = [
         begin=0,
         end=max_epochs,
         by_epoch=True,
-        milestones=[8, 11],
+        milestones=[24],
         gamma=0.1)
 ]
 

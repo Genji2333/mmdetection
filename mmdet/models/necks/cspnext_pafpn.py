@@ -4,6 +4,7 @@ from typing import Sequence, Tuple
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from mmcv.cnn import ConvModule, DepthwiseSeparableConvModule
 from mmengine.model import BaseModule
 from torch import Tensor
@@ -147,7 +148,9 @@ class CSPNeXtPAFPN(BaseModule):
                 feat_heigh)
             inner_outs[0] = feat_heigh
 
-            upsample_feat = self.upsample(feat_heigh)
+            # 修改上采样方式，精确匹配低层特征图尺寸
+            upsample_feat = F.interpolate(
+                feat_heigh, size=feat_low.shape[2:], mode='nearest')
 
             inner_out = self.top_down_blocks[len(self.in_channels) - 1 - idx](
                 torch.cat([upsample_feat, feat_low], 1))

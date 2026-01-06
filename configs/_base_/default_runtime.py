@@ -4,7 +4,7 @@ default_hooks = dict(
     timer=dict(type='IterTimerHook'), # 基于epoch还是iteration
     logger=dict(type='LoggerHook', interval=50), #  多久打印一次日志
     param_scheduler=dict(type='ParamSchedulerHook'),
-    checkpoint=dict(type='CheckpointHook', interval=1), #  多久保存一次模型权重文件，这里是训练一轮就保存一个pth模型文件。
+    checkpoint=dict(type='CheckpointHook', interval=1,max_keep_ckpts=3, save_best='auto', rule='greater'), #  多久保存一次模型权重文件，这里是训练一轮就保存一个pth模型文件。
     sampler_seed=dict(type='DistSamplerSeedHook'), # 随机种子
     visualization=dict(type='DetVisualizationHook')) # 可视化
 

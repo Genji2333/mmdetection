@@ -21,7 +21,7 @@ model = dict(
         norm_cfg=dict(type='BN', requires_grad=True),
         norm_eval=True,
         style='pytorch',
-        init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet50')),
+        init_cfg=dict(type='Pretrained', checkpoint='/icislab/volume1/liuxiaolong/mmdetection/weights/resnet50-19c8e357.pth')),
     neck=dict(
         type='FPN',
         in_channels=[256, 512, 1024, 2048],
@@ -93,7 +93,7 @@ optim_wrapper = dict(
     clip_grad=None)
 
 # learning rate # 学习率设置
-max_epochs = 12
+max_epochs = 36
 param_scheduler = [
     dict(type='LinearLR', start_factor=0.1, by_epoch=False, begin=0, end=500),
     dict(
@@ -101,7 +101,7 @@ param_scheduler = [
         begin=0,
         end=max_epochs,
         by_epoch=True,
-        milestones=[8, 11],
+        milestones=[36],
         gamma=0.1)
 ]
 

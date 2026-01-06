@@ -133,40 +133,49 @@ class DetLocalVisualizer(Visualizer):
 
             bbox_color = palette if self.bbox_color is None \
                 else self.bbox_color
+            bbox_color = (4, 42, 255)
+            # bbox_color = (255, 0, 0)
             bbox_palette = get_palette(bbox_color, max_label + 1)
             colors = [bbox_palette[label] for label in labels]
+
+            # self.draw_bboxes(
+            #     bboxes,
+            #     edge_colors=colors,
+            #     alpha=self.alpha,
+            #     line_widths=self.line_width)
             self.draw_bboxes(
                 bboxes,
                 edge_colors=colors,
-                alpha=self.alpha,
-                line_widths=self.line_width)
+                alpha=1.0,
+                line_widths=4)
 
             positions = bboxes[:, :2] + self.line_width
             areas = (bboxes[:, 3] - bboxes[:, 1]) * (
                 bboxes[:, 2] - bboxes[:, 0])
             scales = _get_adaptive_scales(areas)
 
-            for i, (pos, label) in enumerate(zip(positions, labels)):
-                if 'label_names' in instances:
-                    label_text = instances.label_names[i]
-                else:
-                    label_text = classes[
-                        label] if classes is not None else f'class {label}'
-                if 'scores' in instances:
-                    score = round(float(instances.scores[i]) * 100, 1)
-                    label_text += f': {score}'
+            # 修改：注释掉绘制标签的代码，不显示类别标签和置信度分数
+            # for i, (pos, label) in enumerate(zip(positions, labels)):
+            #     if 'label_names' in instances:
+            #         label_text = instances.label_names[i]
+            #     else:
+            #         label_text = classes[
+            #             label] if classes is not None else f'class {label}'
+            #     if 'scores' in instances:
+            #         score = round(float(instances.scores[i]) * 100, 1)
+            #         label_text += f': {score}'
 
-                self.draw_texts(
-                    label_text,
-                    pos,
-                    colors=text_colors[i],
-                    font_sizes=int(13 * scales[i]),
-                    bboxes=[{
-                        'facecolor': 'black',
-                        'alpha': 0.8,
-                        'pad': 0.7,
-                        'edgecolor': 'none'
-                    }])
+            #     self.draw_texts(
+            #         label_text,
+            #         pos,
+            #         colors=text_colors[i],
+            #         font_sizes=int(13 * scales[i]),
+            #         bboxes=[{
+            #             'facecolor': 'black',
+            #             'alpha': 0.8,
+            #             'pad': 0.7,
+            #             'edgecolor': 'none'
+            #         }])
 
         if 'masks' in instances:
             labels = instances.labels
@@ -482,28 +491,48 @@ class DetLocalVisualizer(Visualizer):
                     pred_img_data, data_sample.pred_panoptic_seg.numpy(),
                     classes, palette)
 
-        if gt_img_data is not None and pred_img_data is not None:
-            drawn_img = np.concatenate((gt_img_data, pred_img_data), axis=1)
-        elif gt_img_data is not None:
-            drawn_img = gt_img_data
-        elif pred_img_data is not None:
-            drawn_img = pred_img_data
-        else:
-            # Display the original image directly if nothing is drawn.
-            drawn_img = image
+        # if gt_img_data is not None and pred_img_data is not None:
+        #     drawn_img = np.concatenate((gt_img_data, pred_img_data), axis=1)
+        # elif gt_img_data is not None:
+        #     drawn_img = gt_img_data
+        # elif pred_img_data is not None:
+        #     drawn_img = pred_img_data
+        # else:
+        #     # Display the original image directly if nothing is drawn.
+        #     drawn_img = image
 
-        # It is convenient for users to obtain the drawn image.
-        # For example, the user wants to obtain the drawn image and
-        # save it as a video during video inference.
-        self.set_image(drawn_img)
+        # # It is convenient for users to obtain the drawn image.
+        # # For example, the user wants to obtain the drawn image and
+        # # save it as a video during video inference.
+        # self.set_image(drawn_img)
 
-        if show:
-            self.show(drawn_img, win_name=name, wait_time=wait_time)
+        # if show:
+        #     self.show(drawn_img, win_name=name, wait_time=wait_time)
 
-        if out_file is not None:
-            mmcv.imwrite(drawn_img[..., ::-1], out_file)
-        else:
-            self.add_image(name, drawn_img, step)
+        # if out_file is not None:
+        #     mmcv.imwrite(drawn_img[..., ::-1], out_file)
+        # else:
+        #     self.add_image(name, drawn_img, step)
+        # 修改：分别保存GT和预测图片，不拼接，且保持原始分辨率
+        if False and gt_img_data is not None:
+            self.set_image(gt_img_data)
+            if out_file is not None:
+                gt_out_file = out_file.replace('.jpg', '_gt.jpg').replace('.png', '_gt.png')
+                mmcv.imwrite(gt_img_data[..., ::-1], gt_out_file)
+            else:
+                self.add_image(name + '_gt', gt_img_data, step)
+            if show:
+                self.show(gt_img_data, win_name=name+'_gt', wait_time=wait_time)
+
+        if pred_img_data is not None:
+            self.set_image(pred_img_data)
+            if out_file is not None:
+                pred_out_file = out_file.replace('.jpg', '_pred.jpg').replace('.png', '_pred.png')
+                mmcv.imwrite(pred_img_data[..., ::-1], pred_out_file)
+            else:
+                self.add_image(name + '_pred', pred_img_data, step)
+            if show:
+                self.show(pred_img_data, win_name=name+'_pred', wait_time=wait_time)
 
 
 def random_color(seed):
